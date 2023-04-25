@@ -1,0 +1,16 @@
+<h2>Welcome to FlightO</h2>
+
+<%= form_with model: @airport, url: '/flights#bla', method: :get do |form| %>
+<p>
+<%= form.label :from %><br>
+<%= form.select :from, @airports.collect{|airport| [airport.name, airport.code] }   %>
+</p>
+<p>
+<%= form.label :to %><br>
+<%= form.select :to, @airports.collect{|airport| [airport.name, airport.code] }   %>
+</p>
+<p>
+<%= select_date %>
+</p>
+<%= form.submit :Search %>
+<% end %>
