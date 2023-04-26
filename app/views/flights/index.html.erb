@@ -1,22 +1,40 @@
 <h2>Welcome to FlightO</h2>
 
-<%= form_with model: @airport, url: '/flights#bla', method: :get do |form| %>
-<p>
-<%= form.label :from %><br>
-<%= form.select :from, @airports.collect{|airport| [airport.name, airport.code] }   %>
-</p>
-<p>
-<%= form.label :to %><br>
-<%= form.select :to, @airports.collect{|airport| [airport.name, airport.code] }   %>
-</p>
-<p>
-<%= date_field("flight", "date", value: Date.today) %>
-</p>
-<%= form.submit :Search %>
+<%= form_with model: @airport, url: '/flights', method: :get do |form| %>
+	<p>
+	<%= form.label :from %><br>
+	<%= form.select :from, Airport.all.collect{|airport| [airport.name, airport.code]} %>
+	</p>
+	<p>
+	<%= form.label :to %><br>
+	<%= form.select :to, Airport.all.collect{|airport| [airport.name, airport.code]}%>
+	</p>
+	<p>
+	<%= form.label :num_tickets %><br>
+	<%= form.select(:num_tickets, [1,2,3,4]) %>
+	</p>
+	<p>
+	<%= form.label :date %><br>
+	<%= date_field("flight", "date", value: Date.today ) %>
+	</p>
+	<%= form.submit :search %>
 <% end %>
 
 <% if params[:commit] %>
-<% @flight_list.each do |flight| %>
-<%= flight.aircraft.name  if flight.arrival_airport.code == 'HYD' and flight.departure_airport.code == 'MAA' %>
+<table>
+	<tr>
+	<th>Aircraft</th>
+	<th>Departure</th>
+	<th>Arrival</th>
+	<th>Date</th>
+	</tr>
+<% @available_flights.each do |flight| %>
+	<tr>
+		<td><%= flight.aircraft.name %></td>
+		<td><%= flight.departure_airport.name %></td>
+		<td><%= flight.arrival_airport.name %></td>
+		<td><%= flight.datetime %></td>
+	</tr>
 <% end %>
+</table>
 <% end %> 
