@@ -32,14 +32,14 @@ end
 
 dates_adder = *(1..10)
 hr = *(0..23)
-min = [0,15,30]
+min = [0,15,30,45]
 
 aircraft_samples = *(1..15)
 airport_samples = *(1..10)
 
 dates_adder.each do |adder|
     15.times do 
-        Flight.create(datetime:DateTime.civil(2023,5,adder,hr.sample,min.sample),\
+        Flight.create(datetime:DateTime.civil(2023,5,adder,hr.sample,min.sample,0,0.23),\
          aircraft_id:airport_samples.sample,\
          arrival_airport_id:airport_samples.sample,\
          departure_airport_id:airport_samples.sample)

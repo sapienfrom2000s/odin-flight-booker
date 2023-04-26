@@ -10,7 +10,13 @@
 <%= form.select :to, @airports.collect{|airport| [airport.name, airport.code] }   %>
 </p>
 <p>
-<%= select_date %>
+<%= date_field("flight", "date", value: Date.today) %>
 </p>
 <%= form.submit :Search %>
 <% end %>
+
+<% if params[:commit] %>
+<% @flight_list.each do |flight| %>
+<%= flight.aircraft.name  if flight.arrival_airport.code == 'HYD' and flight.departure_airport.code == 'MAA' %>
+<% end %>
+<% end %> 
