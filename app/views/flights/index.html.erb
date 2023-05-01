@@ -21,7 +21,7 @@
 <% end %>
 
 <% if params[:commit] %>
-<%= form_with model: @booking, url: booking_path, method: :get do |form| %>
+<%= form_with model: @booking, url: bookings_path, method: :get do |form| %>
  <%= collection_radio_buttons(:flight,:selected, @available_flights, :id, :flight_details) %><br>
  <%= form.hidden_field :passenger_number, value: params[:num_tickets] %>
  <%= form.submit "Book" %>

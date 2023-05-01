@@ -1,2 +1,25 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
+<h1>Book your flight</h1>
+
+<p><b><% flight = Flight.find(params[:flight][:selected]) %>
+<%= flight.departure_airport.name %>
+to 
+<%= flight.arrival_airport.name  %>
+<%= flight.datetime %>
+on
+<%= flight.aircraft.name %>	
+</b></p>
+
+<%= form_with model: @booking, url: bookings_path do |form| %>
+<% counter = 1 %>	
+	<%= form.fields_for :passengers do |f| %>
+		Passenger <%= counter %>
+		<% counter += 1 %>
+		<p><%= f.label :name %>
+		<%= f.text_field :name %></p>
+
+		<p><%= f.label :email %>
+		<%= f.text_field :email %></p>
+	<% end %>
+	<%= form.hidden_field :flight_id, value: params[:flight][:selected] %>
+	<%= form.submit "Confirm Details" %>
+<% end %>	
