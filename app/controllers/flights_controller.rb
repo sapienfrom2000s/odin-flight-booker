@@ -6,6 +6,7 @@ class FlightsController < ApplicationController
    			@available_flights = all_flights.select do |flight|
 			   flight.arrival_airport.code == params[:to] and flight.departure_airport.code == params[:from] and\
  					flight.datetime > params[:flight][:date] and flight.datetime < params[:flight][:date].to_date+1
+#Replace it with active records query 					
  			end
 		end
 	end
