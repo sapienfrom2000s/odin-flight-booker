@@ -1,13 +1,13 @@
 <h2>Welcome to FlightO</h2>
 
-<%= form_with model: @airport, url: '/flights', method: :get do |form| %>
+<%= form_with url: flights_path, method: :get do |form| %>
 	<p>
 	<%= form.label :from %><br>
-	<%= form.select :from, Airport.all.collect{|airport| [airport.name, airport.code]} %>
+	<%= form.collection_select :from, Airport.order(:code),:code, :name  %>
 	</p>
 	<p>
 	<%= form.label :to %><br>
-	<%= form.select :to, Airport.all.collect{|airport| [airport.name, airport.code]}%>
+	<%= form.collection_select :to, Airport.order(:code), :code, :name  %>
 	</p>
 	<p>
 	<%= form.label :num_tickets %><br>
@@ -17,24 +17,13 @@
 	<%= form.label :date %><br>
 	<%= date_field("flight", "date", value: Date.today ) %>
 	</p>
-	<%= form.submit :search %>
+	<%= form.submit :Search %>
 <% end %>
 
 <% if params[:commit] %>
-<table>
-	<tr>
-	<th>Aircraft</th>
-	<th>Departure</th>
-	<th>Arrival</th>
-	<th>Date</th>
-	</tr>
-<% @available_flights.each do |flight| %>
-	<tr>
-		<td><%= flight.aircraft.name %></td>
-		<td><%= flight.departure_airport.name %></td>
-		<td><%= flight.arrival_airport.name %></td>
-		<td><%= flight.datetime %></td>
-	</tr>
-<% end %>
-</table>
+<%= form_with model: @booking, url: bookings_path, method: :get do |form| %>
+ <%= collection_radio_buttons(:flight,:selected, @available_flights, :id, :flight_details) %><br>
+ <%= form.hidden_field :passenger_number, value: params[:num_tickets] %>
+ <%= form.submit "Book" %>
 <% end %> 
+<% end %>
